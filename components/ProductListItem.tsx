@@ -1,7 +1,8 @@
-import { View, StyleSheet,Text,Image } from 'react-native'
+import { View, StyleSheet,Text,Image, Pressable, Linking } from 'react-native'
 import React from 'react'
 import Colors from '@/constants/Colors';
 import { Product } from '@/tpyes/types';
+import { Link } from 'expo-router';
 
 export const defualtImage = "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png"
 
@@ -10,13 +11,17 @@ interface productProps
     product :  Product
 }
 
+
 const ProductListItem = ({product} : productProps) => {
+  
   return (
-    <View style={styles.container}>
-        <Image source={{uri:product.image || defualtImage}} alt='Nothing' style={styles.image} resizeMode='contain'/>   
-        <Text style={styles.title}>{product.name}</Text>
-        <Text style={styles.price}>${product.price}</Text>
-    </View>
+  <Link href={`/(tabs)/menu/${product.id}`} asChild>
+      <Pressable style={styles.container}>
+          <Image source={{uri:product.image || defualtImage}} alt='Nothing' style={styles.image} resizeMode='contain'/>   
+          <Text style={styles.title}>{product.name}</Text>
+          <Text style={styles.price}>${product.price}</Text>
+      </Pressable>
+    </Link>
   )
 }
 

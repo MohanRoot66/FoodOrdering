@@ -4,7 +4,7 @@ import Colors from '@/constants/Colors';
 import { Product } from '@/tpyes/types';
 import { Link } from 'expo-router';
 
-export const defualtImage = "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png"
+export const defaultImage = "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png"
 
 interface productProps 
 {
@@ -17,7 +17,7 @@ const ProductListItem = ({product} : productProps) => {
   return (
   <Link href={`/(tabs)/menu/${product.id}`} asChild>
       <Pressable style={styles.container}>
-          <Image source={{uri:product.image || defualtImage}} alt='Nothing' style={styles.image} resizeMode='contain'/>   
+          <Image source={{uri:product.image || defaultImage}} alt='Nothing' style={styles.image} resizeMode='contain'/>   
           <Text style={styles.title}>{product.name}</Text>
           <Text style={styles.price}>${product.price}</Text>
       </Pressable>

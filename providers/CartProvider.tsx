@@ -7,12 +7,14 @@ interface CartTypes
     items:CartItem[],
     onAddItem : (product:Product,size:CartItem["size"]) =>void;
     updateQuantity : (id:string,quantity:number) => void;
+    total:number
 }
 
 export const CartContext = createContext<CartTypes>({
     items:[],
     onAddItem:()=>{},
-    updateQuantity:()=>{}
+    updateQuantity:()=>{},
+    total:0
 }
 );
 
@@ -54,9 +56,10 @@ const CartProvider = ({children}:PropsWithChildren) => {
         setItems(updatedItems);
     }
     
+    const total = items.map((item)=>item.quantity*item.product.price).reduce(((a,b)=>a+b),0);
 
     return(
-        <CartContext.Provider value={{items,onAddItem,updateQuantity}}>
+        <CartContext.Provider value={{items,onAddItem,updateQuantity,total}}>
             {children}
         </CartContext.Provider>
     )

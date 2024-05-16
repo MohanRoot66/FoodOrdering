@@ -1,23 +1,33 @@
 import { View, Text, Image, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
-import { Stack, useLocalSearchParams } from 'expo-router'
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router'
 import products from '@/assets/data/products';
 import { defaultImage } from '@/components/ProductListItem';
 import Button from '@/components/Button';
+import { useCart } from '@/providers/CartProvider';
+import { PizzaSize } from '@/tpyes/types';
 
 const ProductDetails = () => {
 
   const {id} = useLocalSearchParams();
 
+  const {onAddItem} = useCart();
+
+  const router = useRouter();
+ 
   const product  = products.find(x=>x.id.toString()===id);
 
-  const sizes = ["S","M","L","XL"]
+  const sizes : PizzaSize [] = ['S','M','L','XL'];
 
-  const [selectedSize,setSelectedSize] = useState("M");
+  const [selectedSize,setSelectedSize] = useState<PizzaSize>('M');
 
-  function AddtoCart()
+  const addItemToCart = () =>
   {
-    console.warn("Adding to cart ", selectedSize);
+    if(!product)
+      return
+
+    onAddItem(product,selectedSize);
+    router.push("/cart")
   }
 
   return (
@@ -37,7 +47,7 @@ const ProductDetails = () => {
       
       <Text style={styles.price}>${product?.price}</Text>
 
-      <Button text='Add to cart'  onPress={AddtoCart}/>
+      <Button text='Add to cart'  onPress={addItemToCart}/>
     </View>
   )
 }

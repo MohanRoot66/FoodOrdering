@@ -14,6 +14,9 @@ const index = () => {
       <Link href={'/(tabs) copy'} asChild>
         <Button text="Admin" />
       </Link>
+      <Link href={'/sign-in'} asChild>
+        <Button text="Sign in" />
+      </Link>
     </View>
   );
 };
